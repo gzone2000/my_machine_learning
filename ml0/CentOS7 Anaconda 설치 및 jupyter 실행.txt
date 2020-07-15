@@ -1,0 +1,52 @@
+CentOS7 Anaconda 설치 및 jupyter 실행
+
+
+
+
+# python -V
+Python 2.7.5
+
+# wget https://repo.anaconda.com/archive/Anaconda2-2019.10-Linux-x86_64.sh
+# sh ./Anaconda2-2019.10-Linux-x86_64.sh 
+
+# 터미널 새로 실행
+
+# conda env list
+base                  *  /root/anaconda2
+
+# conda creata --name tf2 python=3.7
+# conda activate tf2
+
+# pip list
+Package    Version            
+---------- -------------------
+certifi    2020.4.5.1         
+pip        20.0.2             
+setuptools 46.2.0.post20200511
+wheel      0.34.2             
+
+# conda install scikit-learn scipy matplotlib numpy pandas tensorflow xlrd ipython pillow graphviz jupyter
+
+# jupyter notebook --generate-config
+Writing default config to: /root/.jupyter/jupyter_notebook_config.py
+
+# python
+Python 3.7.7 (default, Mar 26 2020, 15:48:22) 
+>>> from notebook.auth import passwd
+>>> passwd()
+Enter password: 
+Verify password: 
+'sha1:d869f0211151:315f6efc8e6dacc55a2345a23a5fe4ecb04ad19b'
+
+
+# vi /root/.jupyter/jupyter_notebook_config.py
+c.NotebookApp.password = 'sha1:d869f0211151:315f6efc8e6dacc55a2345a23a5fe4ecb04ad19b'
+c.NotebookApp.notebook_dir = '/root/notebook'
+c.NotebookApp.allow_origin = '*'
+c.NotebookApp.ip = '0.0.0.0'
+c.NotebookApp.open_browser = False
+
+
+# jupyter notebook --allow-root
+
+
