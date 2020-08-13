@@ -5,5 +5,6 @@
 - ml3 : 타이타닉 데이터 분석
 - ml4 : 팬다스 사용법 - 꿀팁
 - ml5 : 머신러닝 알고리즘 실습 정리(Introduction to Machine Learning with Python)
+- ml6 : facebook prephet 
 
 
