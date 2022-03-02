@@ -1,0 +1,44 @@
+크롬드라이버 활용해 크롤링
+
+- 참고 사이트
+. 셀레니움-크롤러-기본-사용법 : https://pythondocs.net/selenium/%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80-%ED%81%AC%EB%A1%A4%EB%9F%AC-%EA%B8%B0%EB%B3%B8-%EC%82%AC%EC%9A%A9%EB%B2%95/
+. python mariadb : https://reddb.tistory.com/139
+
+
+
+# 1. 크롬 브라우져 설치
+# 2. 크롬 드라이버 설치
+- 다운로드 사이트 : https://chromedriver.chromium.org/downloads
+- 크롬 브라우져 버젼 확인 : 크롬 브라우져 > 맟춤설정 > 도움말 > Chrome 정보 > 버전 92
+- c:\chromedriver 폴더 만들고 '크롬 드라이버' 해당 폴더 밑에 복사
+
+# 3. 브라우저 열기 (chrome)
+from selenium import webdriver
+driver = webdriver.Chrome(r'C:\chromedriver\chromedriver.exe')
+
+
+# 4. naver 사이트로 접속
+driver.get('https://www.naver.com/')
+
+# 5. 5초간 대기
+try :
+    WebDriverWait(driver, 5)
+except :
+    pass
+
+# 6. kind 사이트에 '아이폰7' 입력 후 검색 클릭
+# 크롬 브라우져 > F12 > 시작날짜 클릭 >오른쪽 마우스 > 검사 > F12창 '선택부분' 오른쪽 마우스 > copy > copy xpath >//*[@id="startDate"]
+ 
+elem = driver.find_element(By.XPATH, '//*[@id="query"]')
+elem.send_keys("아이폰7")
+
+elem = driver.find_element(By.XPATH,'//*[@id="search_btn"]/span[2]')
+elem.click()
+
+
+# 7. 브라우저 닫기
+driver.close() #현재 탭 닫기
+driver.quit()  #브라우저 닫기
+
+
+

@@ -1,0 +1,134 @@
+pymysql 모듈 이해 및 실습
+
+
+1. mariadb 다운로드 및 설치
+https://mariadb.com/downloads/ > 윈도우64bit 다운로드
+
+2. pymysql 라이브러리 설치
+pip install pymysql 
+(사내) pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org pymysql 
+
+3. Mariadb 연결하고 testDB DB 생성
+
+import pymysql
+
+conn = pymysql.connect(
+    host='127.0.0.1',
+    user='root',
+    password='root',
+    #db='testDB',
+    charset='utf8'
+)
+
+cursor = conn.cursor()
+cursor.execute("CREATE DATABASE testDB")
+
+
+4. Mariadb 연결, testDB DB 연결후 userTable 테이블 만들기
+
+# pymysql 임포트
+import pymysql  
+
+# 접속정보
+conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='testDB', charset='utf8')
+
+# 커서생성
+cur = conn.cursor()
+
+# 실행할 sql문
+sql = "CREATE TABLE IF NOT EXISTS userTable (id char(10), userName char(10), email char(15), birthYear int)"
+
+# 커서로 sql문 실행
+cur.execute(sql)
+
+# 저장
+conn.commit()
+
+# 종료
+conn.close()
+
+
+5.  파이썬으로 입력받는 값들을 테이블의 데이터로 입력하는 프로그램
+
+# pymysql 임포트
+import pymysql  
+
+
+# 접속정보
+conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='testDB', charset='utf8')
+
+# 커서생성
+cur = conn.cursor()
+
+while (True) :
+    data1 = input("사용자 ID를 입력하세요(엔터 클릭 시 종료): ")	
+    if data1 == "" :	
+        break;	
+    data2 = input("사용자 이름을 입력하세요: ")
+    data3 = input("사용자 이메일을 입력하세요: ")
+    data4 = input("사용자 출생연도를 입력하세요: ")
+    sql = "INSERT INTO userTable VALUES('" + data1 + "','" + data2 + "','" + data3 + "'," + data4 + ")"	# sql변수에 INSERT SQL문 입력
+    cur.execute(sql)	
+
+# 저장
+conn.commit()
+
+# 종료
+conn.close()
+
+
+6. 파이썬에서 저장된 데이터를 변수로 받아 출력하는 프로그램
+
+# pymysql 임포트
+import pymysql  
+
+# 접속정보
+conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='testDB', charset='utf8')
+
+# 커서생성
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM userTable")	
+
+print("사용자ID    사용자이름    이메일        출생연도")
+print("----------------------------------------------------")
+
+while (True) :	# 반복실행
+    row = cur.fetchone()	
+    if row== None :	# 커서(테이블 셀렉트)에 더이상 값이 없으면
+        break	# while문을 빠져나감
+    data1 = row[0]
+    data2 = row[1]
+    data3 = row[2]
+    data4 = row[3]
+    print("%5s   %15s   %15s   %d" % (data1, data2, data3, data4))
+
+conn.close()
+
+
+7. 파이썬에서 저장된 데이터를 변수로 받아 출력하는 프로그램(다른 방법)
+
+# pymysql 임포트
+import pymysql
+
+# 접속정보
+conn = pymysql.connect(host='127.0.0.1', user='root', password='root', db='testDB', charset='utf8')
+
+print("사용자ID    사용자이름    이메일        출생연도")
+print("----------------------------------------------------")
+
+try:
+    cur = conn.cursor()
+    sql = "SELECT * FROM userTable"
+    cur.execute(sql)
+    result = cur.fetchall()
+    for row in result:
+        data1 = row[0]
+        data2 = row[1]
+        data3 = row[2]
+        data4 = row[3]
+        print("%5s   %15s   %15s   %d" % (data1, data2, data3, data4))
+finally:
+    conn.close()
+
+
