@@ -1,0 +1,16 @@
+Annotation 라벨링
+
+1. labelimg 사용
+https://github.com/tzutalin/labelImg
+https://tzutalin.github.io/labelImg/ > windows_v1.8.0 다운로드 > 압축 풀기
+> predefined_classes.txt > 열고 > 모두 지우고 > head helmet person 3줄 입력 / 저장
+> 이미지 읽고 > 'Create RecBox' 선택해서 박스 그리고 object 선택 
+> Pascal VOC 혹은 YOLO 둘중에 하나 선택 하고 저장 (우리는 YOLO 선택)
+> 저장된 파일 읽기 > 포맷 : class, center_x, center_y, width, height
+
+2. roboflow 사용
+> https://roboflow.com/ 로그인후 workspace 생성 > public > 1000장까지 무료
+> 'create Project' > 프로젝트이름, Project Type: Object Detection(Bounding Box), group : yolo
+> 이미지 업로드 > finish uploading > 매뉴 : annotation > labelimg처럼 bbox와 label 할당 > 
+> 매뉴 : dataset > preprocessing : continue, Augmentation : continue, Generating : continue
+> 데이터 추출 : export > 'Yolo v5 Pytorch', zip
